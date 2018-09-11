@@ -34,4 +34,19 @@ public class JUnitTest extends TestCase{
 		
 		assertEquals(false, game.player.hasBlackJack2());		
 	}
+	
+	public void testPlayerSplit() {
+		BlackJack game = new BlackJack();
+		Card card = new Card(0,12);
+		Card card2 = new Card(1,12);
+		Card card3 = new Card(0,8);
+		game.player.add(card);
+		game.player.add(card2);
+		
+		assertEquals(true, game.player.split());
+		
+		game.player.add(card3);
+		
+		assertEquals(false, game.player.split());
+	}
 }

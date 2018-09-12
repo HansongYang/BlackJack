@@ -3,7 +3,7 @@ package comp3004;
 import junit.framework.TestCase;
 
 public class JUnitTest extends TestCase{
-	public void testPlayerBusted() {
+	public void testPlayerBusted() { // Testing the correctness of a player has busted.
 		BlackJack game = new BlackJack();
 		Card card = new Card(0,12);
 		Card card2 = new Card(0,11);
@@ -19,7 +19,7 @@ public class JUnitTest extends TestCase{
 		assertEquals(false, game.player.isBusted2());
 	}
 	
-	public void testPlayerBlackJack() {
+	public void testPlayerBlackJack() { // Testing the correctness of a player has BlackJack.
 		BlackJack game = new BlackJack();
 		Card card = new Card(0,12);
 		Card card2 = new Card(0,0);
@@ -35,7 +35,7 @@ public class JUnitTest extends TestCase{
 		assertEquals(false, game.player.hasBlackJack2());		
 	}
 	
-	public void testPlayerSplit() {
+	public void testPlayerSplit() { // Testing the correctness of split action.
 		BlackJack game = new BlackJack();
 		Card card = new Card(0,12);
 		Card card2 = new Card(1,12);
@@ -50,7 +50,7 @@ public class JUnitTest extends TestCase{
 		assertEquals(false, game.player.split());
 	}
 	
-	public void testPlayerValue() {
+	public void testPlayerValue() { // Testing the correctness of a player's card value.
 		BlackJack game = new BlackJack();
 		Card card = new Card(0,12);
 		Card card2 = new Card(1,12);
@@ -64,7 +64,7 @@ public class JUnitTest extends TestCase{
 		assertEquals(19, game.player.value2());
 	}
 	
-	public void testPlayerGetCard() {
+	public void testPlayerGetCard() { // Testing the correctness of a card when players draw a card.
 		BlackJack game = new BlackJack();
 		Card card = new Card(0,12);
 		Card card2 = new Card(0,11);
@@ -79,7 +79,22 @@ public class JUnitTest extends TestCase{
 		game.player.add2(card);
 		game.player.add2(card2);
 		
-		assertEquals("Jack", game.player.getFirstCard().getRankName());
-		assertEquals("10", game.player.getLastCard().getRankName());
+		assertEquals("Jack", game.player.getFirstCard2().getRankName());
+		assertEquals("10", game.player.getLastCard2().getRankName());
+		
+		assertEquals("King", game.player.getCard(0).getRankName());
+	}
+	
+	public void testAceValue() { // Testing the value of ace in different situations.
+		BlackJack game = new BlackJack();
+		Card card = new Card(0,0); //Ace Card
+		Card card2 = new Card(0,6);
+		game.player.add(card);
+		game.player.add(card2);
+		
+		assertEquals(17, game.player.value());
+		
+		game.player.add(card2);
+		assertEquals(13, game.player.value());
 	}
 }

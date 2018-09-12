@@ -71,8 +71,8 @@ public class JUnitTest extends TestCase{
 		game.player.add(card);
 		game.player.add(card2);
 		
-		assertEquals("Correct", "King", game.player.getFirstCard().getRankName());
-		assertEquals("Correct", "Queen", game.player.getLastCard().getRankName());
+		assertEquals("King", game.player.getFirstCard().getRankName());
+		assertEquals("Queen", game.player.getLastCard().getRankName());
 		
 		Card card = new Card(0,10);
 		Card card2 = new Card(0,9);

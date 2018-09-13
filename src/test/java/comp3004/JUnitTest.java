@@ -81,6 +81,15 @@ public class JUnitTest extends TestCase{
 		game.player.add(card3);
 		
 		assertEquals(false, game.player.split());
+		
+		game.dealer.add(card);
+		game.dealer.add(card2);
+		
+		assertEquals(true, game.dealer.split());
+
+		game.dealer.add(card3);
+		
+		assertEquals(false, game.dealer.split());
 	}
 	
 	public void testPlayerValue() { // Testing the correctness of a player's card value.
@@ -114,13 +123,17 @@ public class JUnitTest extends TestCase{
 	public void testAceValue() { // Testing the value of ace in different situations.
 		BlackJack game = new BlackJack();
 		Card card = new Card(0,0); //Ace Card
-		Card card2 = new Card(0,6);
+		Card card2 = new Card(0,6); // 7
 		game.player.add(card);
 		game.player.add(card2);
 		
-		assertEquals(17, game.player.value());
+		assertEquals(18, game.player.value());
 		
 		game.player.add(card2);
-		assertEquals(13, game.player.value());
+		assertEquals(8, game.player.value());
+		
+		game.player.add(card2);
+		game.player.add(card);
+		assertEquals(16, game.player.value());
 	}
 }

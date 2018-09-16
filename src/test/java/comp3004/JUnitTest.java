@@ -107,7 +107,7 @@ public class JUnitTest extends TestCase{
 		assertTrue(game.dealer.value()>17);
 	}
 	
-	public void testDealerRepeatedHit() {
+	public void testDealerRepeatedHit() { //Testing dealer repeatedly hit
 		BlackJack game = new BlackJack();
 		game.console();
 		game.DealerHit();
@@ -116,14 +116,14 @@ public class JUnitTest extends TestCase{
 		assertTrue(value < game.dealer.value());
 	}
 	
-	public void testDealerCardDisplayed() {
+	public void testDealerCardDisplayed() { // Testing the hand of the dealer is displayed at the end of the dealer's turn
 		BlackJack game = new BlackJack();
 		game.console();
 		assertEquals(2, game.dealer.count);
 		game.DealerHit();
 	}
 	
-	public void testDealerBust() {
+	public void testDealerBust() { // Testing the dealer is busted
 		BlackJack game = new BlackJack();
 		Card card = new Card(0,12);
 		Card card2 = new Card(0,11);

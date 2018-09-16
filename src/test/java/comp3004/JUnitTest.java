@@ -135,20 +135,43 @@ public class JUnitTest extends TestCase{
 		assertEquals(true, game.dealer.isBusted());
 	}
 	
-	public void testAceValue() { // Testing the value of ace in different situations.
+	public void testAceValue1() { // Testing the value of ace, two aces one with value 11, one with value 1
 		BlackJack game = new BlackJack();
 		Card card = new Card(0,0); // Ace Card
-		Card card2 = new Card(0,6); // 7
-		game.player.add(card);
-		game.player.add(card);
+		Card card2 = new Card(0,7); // 8
+		Card card3 = new Card(2,0); //Ace Card
 		
-		assertEquals(12, game.player.value());
-		
+		game.player.add(card);
 		game.player.add(card2);
-		assertEquals(19, game.player.value());
-
-		game.player.add(card);
+		game.player.add(card3);
 		assertEquals(20, game.player.value());
+	}
+	
+	public void testAceValue2() {  // Testing the value of ace, two aces both with value 1
+		BlackJack game = new BlackJack();
+		Card card = new Card(0,0); // Ace Card
+		Card card2 = new Card(0,7); // 8
+		Card card3 = new Card(2,8); // 9
+		
+		game.player.add(card);
+		game.player.add(card2);
+		game.player.add(card3);
+		assertEquals(19, game.player.value());
+	}
+	
+	public void testAceValue3() { //Testing the value of ace, two aces one changing value from 11 to 1
+		BlackJack game = new BlackJack();
+		Card card = new Card(0,0); // Ace Card
+		Card card2 = new Card(0,4); // 5
+		Card card3 = new Card(2,9); // 10
+		Card card4 = new Card(3,0); //Ace Card
+		
+		game.player.add(card);
+		game.player.add(card2);
+		game.player.add(card4);
+		assertEquals(17, game.player.value());
+		game.player.add(card3);
+		assertEquals(17, game.player.value());
 	}
 	
 	public void testJQKValue() { // Testing the correctness of J,Q,K's value

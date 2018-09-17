@@ -18,15 +18,13 @@ public class BlackJack {
 	int suit = 0, rank = 0;
 	
 	public BlackJack() {
-		start();
-	}
-	
-	public void console() {
 		deck = new Deck();
 		deck.shuffle();
 		player = new Hand();
 		dealer = new Hand();
-		
+	}
+	
+	public void console() {
 		player.add(deck.next());
 		System.out.println("Player receives " + player.getLastCard().getRankName() + " of " + player.getLastCard().getSuitName() + ".");
 		player.add(deck.next());
@@ -47,8 +45,6 @@ public class BlackJack {
 	}
 	
 	public void file() {
-		player = new Hand();
-		dealer = new Hand();
 		System.out.println("Please input a file's path.");
 		choose = sc.nextLine();
 	
@@ -678,7 +674,8 @@ public class BlackJack {
 		input(choose);
 	}
 	
-	public static void main(String[] args){
+	public void main(String[] args){
 		new BlackJack();
+		start();
 	}
 }

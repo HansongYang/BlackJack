@@ -75,7 +75,7 @@ public class BlackJack {
 				} 
 			}                                                                                                                                                                                                                                                 
 		}
-	//	game2(line);
+		game2(line);
 	}
 	
 	public void PlayerHit() {
@@ -272,6 +272,387 @@ public class BlackJack {
 				}
 				stop = true;
 				break;
+			}
+		}
+	}
+	
+	public void Suit(char i) {
+		switch(i) {
+			case 'S': playerSuit = "Spades"; suit = 3; break;
+			case 'C': playerSuit = "Clubs"; suit = 0; break;
+			case 'H': playerSuit = "Hearts"; suit = 2; break;
+			case 'D': playerSuit = "Diamonds"; suit = 1; break;
+			default: playerSuit = "Unknown";
+		}
+	}
+	
+	public boolean Rank(char i) {
+		switch(i) {
+			case 'A': playerRank = "Ace"; rank = 0; break;
+			case 'J': playerRank = "Jack"; rank = 10; break;
+			case 'Q': playerRank = "Queen"; rank = 11; break;
+			case 'K': playerRank = "King"; rank = 12; break;
+			case '2': 
+			case '3': 
+			case '4':
+			case '5':
+			case '6':
+			case '7':
+			case '8':
+			case '9': rank = Character.getNumericValue(i) - 1; playerRank = String.valueOf(i); break;
+			case '1': playerRank = "10"; rank = 9; break;
+			default: playerRank = "Unknown";
+		}
+		if(rank == 9) {
+			return true;
+		}
+		return false;
+	}
+	
+	public void Suit2(char i) {
+		switch(i) {
+			case 'S': dealerSuit = "Spades"; suit = 3; break;
+			case 'C': dealerSuit = "Clubs"; suit = 0; break;
+			case 'H': dealerSuit = "Hearts"; suit = 2; break;
+			case 'D': dealerSuit = "Diamonds"; suit = 1; break;
+			default: dealerSuit = "Unknown";
+		}
+	}
+	
+	public boolean Rank2(char i) {
+		switch(i) {
+			case 'A': dealerRank = "Ace"; rank = 0; break;
+			case 'J': dealerRank = "Jack"; rank = 10; break;
+			case 'Q': dealerRank = "Queen"; rank = 11; break;
+			case 'K': dealerRank = "King"; rank = 12; break;
+			case '2': 
+			case '3': 
+			case '4':
+			case '5':
+			case '6':
+			case '7':
+			case '8':
+			case '9': rank = Character.getNumericValue(i) - 1; dealerRank = String.valueOf(i); break;
+			case '1': dealerRank = "10"; rank = 9; break;
+			default: dealerRank = "Unknown";
+		}
+		if(rank == 9) {
+			return true;
+		}
+		return false;
+	}
+	
+	public void game2(String line) {
+		int i = 0;
+
+		Suit(line.charAt(i));
+
+		if(playerSuit.equals("Unknown")) {
+			System.out.println("The content of this file is incorrect.");
+			return;
+		}
+		i++;
+		
+		if(Rank( line.charAt(i))) {
+			i++;
+		}
+
+		i++;
+		
+		if(playerRank.equals("Unknown")  || line.charAt(i) != ' ') {
+			System.out.println("The content of this file is incorrect.");
+			return;
+		}
+		
+		i++;
+		Card a = new Card(suit,rank);
+		player.add(a);
+		System.out.println("Player receives the " + playerRank + " of "+ playerSuit + ".");
+		
+		Suit(line.charAt(i));
+		
+		if(playerSuit.equals("Unknown")) {
+			System.out.println("The content of this file is incorrect.");
+			return;
+		}
+		
+		i++;
+		
+		if(Rank(line.charAt(i))) {
+			i++;
+		}
+		
+		i++;
+		
+		if(playerRank.equals("Unknown") || line.charAt(i) != ' ') {
+			System.out.println("The content of this file is incorrect.");
+			return;
+		}
+		Card b = new Card(suit,rank);
+		player.add(b);
+		System.out.println("Player receives the " + playerRank + " of "+ playerSuit + ". Player's current score is " + player.value() + ".");
+		i++;
+		
+		if(player.getFirstCard().getRankName().equals(player.getLastCard().getRankName()) && player.getFirstCard().getSuitName().equals(player.getLastCard().getSuitName())) {
+			System.out.println("This card has already played.");
+			return;
+		}
+		
+		Suit2(line.charAt(i));
+	
+		if(dealerSuit.equals("Unknown")) {
+			System.out.println("The content of this file is incorrect.");
+			return;
+		}
+		i++;
+		
+		if(Rank2(line.charAt(i))) {
+			i++;
+		}
+		i++;
+		
+		if(dealerRank.equals("Unknown") || line.charAt(i) != ' ') {
+			System.out.println("The content of this file is incorrect.");
+			return;
+		}
+		Card c = new Card(suit,rank);
+		dealer.add(c);
+		System.out.println("Dealer receives the " + dealerRank + " of " + dealerSuit + ".");
+		i++;
+		
+		Suit2(line.charAt(i));
+	
+		if(dealerSuit.equals("Unknown")) {
+			System.out.println("The content of this file is incorrect.");
+			return;
+		}
+		i++;
+		
+		if(Rank2(line.charAt(i))) {
+			i++;
+		}
+		i++;
+		
+		if(dealerRank.equals("Unknown")) {
+			System.out.println("The content of this file is incorrect.");
+			return;
+		}
+		
+		Card d = new Card(suit, rank);
+		dealer.add(d);
+		System.out.println("Dealer receives the " + dealerRank + " of " + dealerSuit + ". Dealer's current score is " + dealer.value() + ".\n"); 
+
+		if(dealer.getFirstCard().getRankName().equals(dealer.getLastCard().getRankName()) && dealer.getFirstCard().getSuitName().equals(dealer.getLastCard().getSuitName())) {
+			System.out.println("This card has already played.");
+			return;
+		}
+		
+		if(player.hasBlackJack()) {
+			System.out.println("Player has Blackjack. Player's score is " + player.value() + ".");
+		}
+		if(dealer.hasBlackJack()) {
+			System.out.println("Dealer has Blackjack. Dealer's score is " + dealer.value() + ". Dealer wins.");
+		}
+		if(i == line.length()) {
+			return;
+		}else if(line.charAt(i) != ' ') {
+			System.out.println("The content of this file is incorrect.");
+			return;
+		}
+        i++;
+        
+		while(true) {
+			if(line.charAt(i) == 'H') {
+				i += 2;
+				if(player.splitted) {
+					Suit(line.charAt(i));
+					i++;
+					if(Rank(line.charAt(i))) {
+						i++;
+					}
+					i++;
+					Card card = new Card(suit,rank);
+					player.add(card);
+					System.out.println("Player choose to hit and receives " + playerRank + " of "+ playerSuit + " for the first stack. Player's first stack current score is " + player.value() + ".");
+				}else {
+					Suit(line.charAt(i));
+					i++;
+					if(Rank(line.charAt(i))) {
+						i++;
+					}
+					i++;
+					Card card = new Card(suit,rank);
+					player.add(card);
+					System.out.println("Player choose to hit and receives " + playerRank + " of "+ playerSuit + ". Player's current score is " + player.value() + ".");
+				}
+			}else if(line.charAt(i) == 'S') {
+				if(player.splitted) {
+					System.out.println("Player choose to stand for the first stack.");
+					i += 2;
+					while(true) {
+						if(line.charAt(i) == 'S') {
+							System.out.println("Player choose to stand for the second stack.");
+							break;
+						}else if (line.charAt(i) == 'H') {
+							i+=2;
+							Suit(line.charAt(i));
+							i++;
+							if(Rank(line.charAt(i))) {
+								i++;
+							}
+							i++;
+							Card card = new Card(suit,rank);
+							player.add2(card);
+							System.out.println("Player choose to hit and receives " + playerRank + " of "+ playerSuit + " for the second stack. Player's second stack current score is " + player.value2() + ".");
+						}else {
+							Suit(line.charAt(i));
+							i++;
+							if(Rank(line.charAt(i))) {
+								i++;
+							}
+							i++;
+							Card card = new Card(suit,rank);
+							player.add2(card);
+							System.out.println("Player choose to hit and receives " + playerRank + " of "+ playerSuit + " for the second stack. Player's second stack current score is " + player.value2() + ".");
+						}
+						if(i < (line.length()-1)) {
+							i++;
+						}else {
+							break;
+						}
+					}
+				}else {
+					System.out.println("Player choose to stand.");
+					if(dealer.getFirstCard().getRankName().equals(dealer.getLastCard().getRankName())) {
+						dealer.split();
+						i += 2;
+						Suit2(line.charAt(i));
+						i++;
+						if(Rank2(line.charAt(i))) {
+							i++;
+						}
+						Card card = new Card(suit,rank); 
+						dealer.add(card); 
+						System.out.println("Dealer receives " + dealerRank + " of "+ dealerSuit + " for the first stack. Dealer's first stack current score is "+ dealer.value() + ".");
+						
+						while(true) {
+							i += 2;
+							if(!dealer.isBusted()){
+								Suit2(line.charAt(i));
+								i++;
+								if(Rank2(line.charAt(i))) {
+									i++;
+								}
+								Card s = new Card(suit,rank); 
+								dealer.add(s); 
+								System.out.println("Dealer choose to hit and receives " + dealerRank + " of "+ dealerSuit + " for the first stack. Dealer's first stack current score is "+ dealer.value() + ".");
+							}else {
+								Suit2(line.charAt(i));
+								i++;
+								if(Rank2(line.charAt(i))) {
+									i++;
+								}
+								Card s = new Card(suit,rank); 
+								dealer.add2(s); 
+								System.out.println("Dealer choose to hit and receives " + dealerRank + " of "+ dealerSuit + " for the second stack. Dealer's second stack current score is "+ dealer.value2() + ".");
+								if(i == (line.length()-1)){
+									break;
+								}
+							}
+						}
+					}else {
+						while(true) {
+							i += 2;
+							Suit2(line.charAt(i));
+							i++;
+							if(Rank2(line.charAt(i))) {
+								i++;
+							}
+							Card card = new Card(suit,rank); 
+							dealer.add(card); 
+							System.out.println("Dealer choose to hit and receives " + dealerRank + " of "+ dealerSuit + ". Dealer's current score is "+ dealer.value() + ".");
+							if(i == (line.length()-1)) {
+								break;
+							}
+						}
+					}
+				}
+			}else if(line.charAt(i) == 'D') {
+				System.out.println("Player choose to split.");
+				player.split();
+				i += 2;
+				Suit(line.charAt(i));
+				i++;
+				if(Rank(line.charAt(i))) {
+					i++;
+				}
+				i++;
+				Card card = new Card(suit,rank);
+				player.add(card);
+				System.out.println("Player receives " + playerRank + " of "+ playerSuit + " for the first stack. Player's current score is " + player.value() + ".");
+			}
+		
+			if(i < (line.length()-1)) {
+				i++;
+			}else {
+				break;
+			}
+		}
+		
+		if(playerSuit.equals("Unknown") || playerRank.equals("Unknown") || dealerSuit.equals("Unknown") || dealerRank.equals("Unknown")) {
+			System.out.println("The content of this file is incorrect.");
+			return;
+		}
+		
+		if(player.splitted) {
+			if(player.isBusted() && player.isBusted2()) {
+				System.out.println("Dealer wins. Dealer's score is " + dealer.value() + ". Player's first stack score is " + player.value() + ". Player's second stack score is " + player.value2() + ".");
+			}else if(player.isBusted() && dealer.value() >= player.value2()) {
+				System.out.println("Dealer wins. Dealer's score is " + dealer.value() + ". Player's first stack score is " + player.value() + ". Player's second stack score is " + player.value2() + ".");
+			}else if(player.isBusted2() && dealer.value() >= player.value()) {
+				System.out.println("Dealer wins. Dealer's score is " + dealer.value() + ". Player's first stack score is " + player.value() + ". Player's second stack score is " + player.value2() + ".");
+			}else if(dealer.value() >= player.value() && dealer.value() >= player.value2()) {
+				System.out.println("Dealer wins. Dealer's score is " + dealer.value() + ". Player's first stack score is " + player.value() + ". Player's second stack score is " + player.value2() + ".");
+			}else if(player.isBusted() && player.value2() > dealer.value()) {
+				System.out.println("Player's second stack wins. Player's second stack score is " + player.value2() + ". Dealer's score is " + dealer.value() + ".");
+			}else if(player.isBusted2() && player.value() > dealer.value()) {
+				System.out.println("Player's first stack wins. Player's first stack score is " + player.value() + ". Dealer's score is " + dealer.value() + ".");
+			}else {
+				if(player.value() > player.value2()) {
+					System.out.println("Player's first stack wins. Player's first stack score is " + player.value() + ". Dealer's score is " + dealer.value() + ".");
+				}else {
+					System.out.println("Player's second stack wins. Player's second stack score is " + player.value2() + ". Dealer's score is " + dealer.value() + ".");
+				}
+			}
+		}else if(dealer.splitted) {
+			if(dealer.isBusted() && dealer.isBusted2()) {
+				System.out.println("Player wins. Player's score is " + player.value() + ". Dealer's first stack score is " + dealer.value() + ". Dealer's second stack score is " + dealer.value2() + ".");
+			}else if(dealer.isBusted() && player.value() > dealer.value2()) {
+				System.out.println("Player wins. Player's score is " + player.value() + ". Dealer's first stack score is " + dealer.value() + ". Dealer's second stack score is " + dealer.value2() + ".");
+			}else if(dealer.isBusted2() && player.value() >= dealer.value()) {
+				System.out.println("Player wins. Player's score is " + player.value() + ". Dealer's first stack score is " + dealer.value() + ". Dealer's second stack score is " + dealer.value2() + ".");
+			}else if(player.value() >= dealer.value() && player.value() >= dealer.value2()) {
+				System.out.println("Player wins. Player's score is " + player.value() + ". Dealer's first stack score is " + dealer.value() + ". Dealer's second stack score is " + dealer.value2() + ".");
+			}else if(dealer.isBusted() && dealer.value2() >= player.value()) {
+				System.out.println("Dealer's second stack wins. Dealer's second stack score is " + dealer.value2() + ". Player's score is " + player.value() + ".");
+			}else if(dealer.isBusted2() && dealer.value() >= player.value()) {
+				System.out.println("Dealer's first stack wins. Dealer's first stack score is " + dealer.value() + ". Player's score is " + player.value() + ".");
+			}else {
+				if(dealer.value() > dealer.value2()) {
+					System.out.println("Dealer's first stack wins. Dealer's first stack score is " + dealer.value() + ". Player's score is " + player.value() + ".");
+				}else {
+					System.out.println("Dealer's second stack wins. Dealer's second stack score is " + dealer.value2() + ". Player's score is " + player.value() + ".");
+				}
+			}
+		}else {
+			if(player.isBusted()) {
+				System.out.println("Player busted. Dealer wins. Dealer's score is " + dealer.value() + ". Player's score is " + player.value() + ".");
+			}else if(dealer.isBusted()) {
+				System.out.println("Dealer busted. Player wins. Player's score is " + player.value() + ". Dealer's score is " + dealer.value() + ".");
+			}else if(dealer.value() >= player.value()) {
+				System.out.println("Dealer wins. Dealer's score is " + dealer.value() + ". Player's score is " + player.value() + ".");
+			}else {
+				System.out.println("Player wins. Player's score is " + player.value() + ". Dealer's score is " + dealer.value() + ".");
 			}
 		}
 	}

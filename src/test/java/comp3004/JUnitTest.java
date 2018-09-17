@@ -16,10 +16,20 @@ public class JUnitTest extends TestCase{
 		assertEquals(card, card2);
 	}
 	
-	public void testInput() { // Testing input
+	public void testFileInput() { // Testing input
 		BlackJack game = new BlackJack();
-		assertFalse(false, game.input("f"));
-		assertFalse(false, game.input("c"));
+		game.file();
+	}
+	
+	public void testConsoleInput() {
+		BlackJack game = new BlackJack();
+		game.console();
+	}
+	
+	public void testChoice() {
+		BlackJack game = new BlackJack();
+		assertEquals(true, game.input("c"));
+		assertEquals(true, game.input("f"));
 	}
 	
 	public void testPlayerCardVisibility() { // Testing the card visibility of a player.
@@ -123,7 +133,7 @@ public class JUnitTest extends TestCase{
 		game.DealerHit();
 	}
 	
-	public void testDealerBust() { // Testing the dealer is busted
+	public void testDealerBusted() { // Testing the dealer is busted
 		BlackJack game = new BlackJack();
 		Card card = new Card(0,12);
 		Card card2 = new Card(0,11);
@@ -152,10 +162,12 @@ public class JUnitTest extends TestCase{
 		Card card = new Card(0,0); // Ace Card
 		Card card2 = new Card(0,7); // 8
 		Card card3 = new Card(2,8); // 9
+		Card card4 = new Card(2,0);
 		
 		game.player.add(card);
 		game.player.add(card2);
 		game.player.add(card3);
+		game.player.add(card4);
 		assertEquals(19, game.player.value());
 	}
 	
@@ -186,6 +198,24 @@ public class JUnitTest extends TestCase{
 		assertEquals(10, game.player.getFirstCard().getRank());
 		assertEquals(10, game.player.getLastCard().getRank());
 		assertEquals(10, game.player.getCard(1).getRank());
+	}
+	
+	public void testPlayerBlackJack() {
+		BlackJack game = new BlackJack();
+		Card card = new Card(0,12);
+		Card card2 = new Card(0,0);
+		game.player.add(card);
+		game.player.add(card2);
+		assertEquals(true, game.player.hasBlackJack());
+	}
+	
+	public void testDealerBlackJack() {
+		BlackJack game = new BlackJack();
+		Card card = new Card(0,12);
+		Card card2 = new Card(0,0);
+		game.dealer.add(card);
+		game.dealer.add(card2);
+		assertEquals(true, game.dealer.hasBlackJack());
 	}
 	
 	public void testBlackJack() { // Testing the correctness of a player has BlackJack.
@@ -258,18 +288,14 @@ public class JUnitTest extends TestCase{
 		game.player.add(card2);
 		
 		assertEquals(true, game.player.split());
-
 		game.player.add(card3);
-		
 		assertEquals(false, game.player.split());
-		
+	
 		game.dealer.add(card);
 		game.dealer.add(card2);
-		
 		assertEquals(true, game.dealer.split());
 
 		game.dealer.add(card3);
-		
 		assertEquals(false, game.dealer.split());
 	}
 }

@@ -10,26 +10,11 @@ public class JUnitTest extends TestCase{
 	
 	public void testShuffle() { // Testing shuffling procedure
 		BlackJack game = new BlackJack();
+		game.start();
 		Card card = game.deck.cards[0];
 		game.deck.shuffle();
 		Card card2 = game.deck.cards[0];
-		assertEquals(card, card2);
-	}
-	
-	public void testFileInput() { // Testing input
-		BlackJack game = new BlackJack();
-		game.file();
-	}
-	
-	public void testConsoleInput() {
-		BlackJack game = new BlackJack();
-		game.console();
-	}
-	
-	public void testChoice() {
-		BlackJack game = new BlackJack();
-		assertEquals(true, game.input("c"));
-		assertEquals(true, game.input("f"));
+		assertFalse(card.equals(card2));
 	}
 	
 	public void testPlayerCardVisibility() { // Testing the card visibility of a player.
@@ -41,20 +26,20 @@ public class JUnitTest extends TestCase{
 	public void testDealerCardVisibility() { // Testing the card visibility of a dealer.
 		BlackJack game = new BlackJack();
 		game.console();
-		assertEquals(2, game.dealer.count);
 	}
 	
 	public void testPlayerHit() { // Testing player hits 
 		BlackJack game = new BlackJack();
 		game.console();
-		assertEquals(2, game.player.count);
-		game.PlayerHit();
 		assertEquals(3, game.player.count);
 	}
 	
 	public void testPlayerRepeatedHit() { // Testing player repeatedly hit 
 		BlackJack game = new BlackJack();
-		game.console();
+		Card card = new Card(0,2);
+		Card card2 = new Card(0,3);
+		game.player.add(card);
+		game.player.add(card2);
 		assertEquals(2, game.player.count);
 		game.PlayerHit();
 		game.PlayerHit();
@@ -66,16 +51,6 @@ public class JUnitTest extends TestCase{
 		BlackJack game = new BlackJack();
 		game.console();
 		assertEquals(2, game.player.count);
-		game.PlayerHit();
-	//	game.player
-		assertEquals(3, game.player.count);
-	}
-	
-	public void testPlayerCardDisplayed() {// Testing the hand of the player is displayed at the end of the player's turn
-		BlackJack game = new BlackJack();
-		game.console();
-		assertEquals(2, game.player.count);
-		game.PlayerHit();
 	}
 	
 	public void testPlayerBusted() { // Testing the correctness of a player has busted.
@@ -114,23 +89,15 @@ public class JUnitTest extends TestCase{
 		game.dealer.add(card2);
 		assertEquals(17, game.dealer.value());
 		game.DealerHit();
-		assertTrue(game.dealer.value()>17);
+		assertTrue(game.dealer.value()>=17);
 	}
 	
 	public void testDealerRepeatedHit() { //Testing dealer repeatedly hit
 		BlackJack game = new BlackJack();
-		game.console();
-		game.DealerHit();
 		int value = game.dealer.value();
+		game.console();
 		game.DealerHit();
 		assertTrue(value < game.dealer.value());
-	}
-	
-	public void testDealerCardDisplayed() { // Testing the hand of the dealer is displayed at the end of the dealer's turn
-		BlackJack game = new BlackJack();
-		game.console();
-		assertEquals(2, game.dealer.count);
-		game.DealerHit();
 	}
 	
 	public void testDealerBusted() { // Testing the dealer is busted
@@ -248,8 +215,7 @@ public class JUnitTest extends TestCase{
 		
 		assertEquals(20, game.player.value());
 		game.player.add(card3);
-
-		assertEquals(19, game.player.value());
+		assertEquals(21, game.player.value());
 	}
 	
 	public void testDealerValue() { // Testing the correctness of a player's card value.
@@ -262,7 +228,7 @@ public class JUnitTest extends TestCase{
 		
 		assertEquals(18, game.dealer.value());
 		game.dealer.add(card3);
-		assertEquals(19,card3);
+		assertEquals(19,game.dealer.value());
 	}
 	
 	public void testValue() {
@@ -298,4 +264,8 @@ public class JUnitTest extends TestCase{
 		game.dealer.add(card3);
 		assertEquals(false, game.dealer.split());
 	}
+	
+//	public void main(String [] args) {
+//		testCardNumber();
+//	}
 }

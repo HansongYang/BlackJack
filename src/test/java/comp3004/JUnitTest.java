@@ -16,6 +16,19 @@ public class JUnitTest extends TestCase{
 		assertFalse(card.equals(card2));
 	}
 	
+	public void testCardVisible() {
+		BlackJack game = new BlackJack();
+		game.console();
+		assertEquals(2, game.player.count);
+		assertEquals(2, game.dealer.count);
+	}
+	
+	public void testCardDisplayed() {
+		BlackJack game = new BlackJack();
+		game.console();
+		assertTrue(game.player.count>=2);
+	}
+	
 	public void testPlayerHit() { // Testing player hits 
 		BlackJack game = new BlackJack();
 		game.console();

@@ -7,15 +7,16 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class BlackJack {
-	public Hand player;
-	public Hand dealer;
-	public Deck deck;
-	boolean stop = false;
-	boolean second = false;
-	Scanner sc = new Scanner(System.in);
-	String choose = "";
-	String playerSuit = "",playerRank = "", dealerSuit = "", dealerRank = "";
-	int suit = 0, rank = 0;
+	public static Hand player;
+	public static Hand dealer;
+	public static Deck deck;
+	static boolean stop = false;
+	static boolean second = false;
+	static Scanner sc = new Scanner(System.in);
+	static String choose = "";
+	static String playerSuit = "",playerRank = "", dealerSuit = "", dealerRank = "";
+	static int suit = 0;
+	static int rank = 0;
 	
 	public BlackJack() {
 		deck = new Deck();
@@ -24,7 +25,7 @@ public class BlackJack {
 		dealer = new Hand();
 	}
 	
-	public void console() {
+	public static void console() {
 		player.add(deck.next());
 		System.out.println("Player receives " + player.getLastCard().getRankName() + " of " + player.getLastCard().getSuitName() + ".");
 		player.add(deck.next());
@@ -44,7 +45,7 @@ public class BlackJack {
 		game();
 	}
 	
-	public void file() {
+	public static void file() {
 		System.out.println("Please input a file's path.");
 		choose = sc.nextLine();
 	
@@ -74,7 +75,7 @@ public class BlackJack {
 		game2(line);
 	}
 	
-	public void PlayerHit() {
+	public static void PlayerHit() {
 		if(player.splitted) {
 			if(second) {
 				player.add2(deck.next());
@@ -102,7 +103,7 @@ public class BlackJack {
 		}
 	}
 	
-	public void DealerHit() {
+	public static void DealerHit() {
 		if(player.isBusted() && player.isBusted2()) {
 			System.out.println("Dealer wins. Dealer's score is " + dealer.value() + ". Player's first stack score is " + player.value() + ". Player's second stack score is " + player.value2() + ".");
 			return;
@@ -154,7 +155,7 @@ public class BlackJack {
 		}
 	}
 	
-	public void game() {
+	public static void game() {
 		while(!stop) {
 			if(player.split()) {
 				System.out.println("Please choose to Hit (H) or Stand (S) or Split (D).");
@@ -178,7 +179,7 @@ public class BlackJack {
 		}
 	}
 	
-	public void split() {
+	public static void split() {
 		System.out.println("Player choose to split.");
 		player.add(deck.next());
 		System.out.println("Player receives " + player.getLastCard().getRankName() + " of " + player.getLastCard().getSuitName() + " for the first stack.");
@@ -217,7 +218,7 @@ public class BlackJack {
 		}
 	}
 	
-	public void split2() {
+	public static void split2() {
 		System.out.println("Dealer choose to split.");
 		dealer.add(deck.next());
 		System.out.println("Dealer receives " + dealer.getLastCard().getRankName() + " of " + dealer.getLastCard().getSuitName() + " for the first stack.");
@@ -272,7 +273,7 @@ public class BlackJack {
 		}
 	}
 	
-	public void Suit(char i) {
+	public static void Suit(char i) {
 		switch(i) {
 			case 'S': playerSuit = "Spades"; suit = 3; break;
 			case 'C': playerSuit = "Clubs"; suit = 0; break;
@@ -282,7 +283,7 @@ public class BlackJack {
 		}
 	}
 	
-	public boolean Rank(char i) {
+	public static boolean Rank(char i) {
 		switch(i) {
 			case 'A': playerRank = "Ace"; rank = 0; break;
 			case 'J': playerRank = "Jack"; rank = 10; break;
@@ -305,7 +306,7 @@ public class BlackJack {
 		return false;
 	}
 	
-	public void Suit2(char i) {
+	public static void Suit2(char i) {
 		switch(i) {
 			case 'S': dealerSuit = "Spades"; suit = 3; break;
 			case 'C': dealerSuit = "Clubs"; suit = 0; break;
@@ -315,7 +316,7 @@ public class BlackJack {
 		}
 	}
 	
-	public boolean Rank2(char i) {
+	public static boolean Rank2(char i) {
 		switch(i) {
 			case 'A': dealerRank = "Ace"; rank = 0; break;
 			case 'J': dealerRank = "Jack"; rank = 10; break;
@@ -338,7 +339,7 @@ public class BlackJack {
 		return false;
 	}
 	
-	public void game2(String line) {
+	public static void game2(String line) {
 		int i = 0;
 
 		Suit(line.charAt(i));
@@ -653,7 +654,7 @@ public class BlackJack {
 		}
 	}
 	
-	public boolean input(String choose) {
+	public static boolean input(String choose) {
 		if(choose.equals("c") || choose.equals("C") ) {
 			console();
 		}
@@ -668,13 +669,13 @@ public class BlackJack {
 		return true;
 	}
 	
-	public void start() {
+	public static void start() {
 		System.out.println("Please select console (c) input or file (f) input.");
 		String choose = sc.nextLine();
 		input(choose);
 	}
 	
-	public void main(String[] args){
+	public static void main(String[] args){
 		new BlackJack();
 		start();
 	}

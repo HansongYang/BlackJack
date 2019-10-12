@@ -1,3 +1,3 @@
-# comp3004
+Black Jack 
 
-Comp 3004 Course Repository - BlackJack program with JUnit test which follows TDD approach.
+BlackJack program with JUnit test which follows TDD approach.
